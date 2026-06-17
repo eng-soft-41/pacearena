@@ -669,8 +669,15 @@
 
       .feature-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
+      }
+
+      .feature-showcase {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+        gap: clamp(28px, 5vw, 64px);
+        align-items: center;
       }
 
       .feature {
@@ -693,6 +700,74 @@
         width: 40px;
         height: 40px;
         color: var(--primary);
+      }
+
+      .ar-collage {
+        position: relative;
+        min-height: clamp(560px, 62vw, 760px);
+      }
+
+      .ar-image-card {
+        position: absolute;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .ar-image-card::before,
+      .ar-image-card::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        width: 22px;
+        height: 22px;
+        pointer-events: none;
+      }
+
+      .ar-image-card::before {
+        top: 18px;
+        left: 18px;
+        border-top: 2px solid var(--primary);
+        border-left: 2px solid var(--primary);
+      }
+
+      .ar-image-card::after {
+        right: 18px;
+        bottom: 18px;
+        border-right: 2px solid var(--primary);
+        border-bottom: 2px solid var(--primary);
+      }
+
+      .ar-image-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: saturate(0.92) contrast(1.08);
+      }
+
+      .ar-image-card.hmd {
+        top: 0;
+        right: 0;
+        width: 82%;
+        aspect-ratio: 1.5;
+      }
+
+      .ar-image-card.selfie {
+        left: 0;
+        bottom: 8%;
+        z-index: 2;
+        width: 40%;
+        aspect-ratio: 0.65;
+      }
+
+      .ar-image-card.podium {
+        right: 10%;
+        bottom: 0;
+        z-index: 3;
+        width: 58%;
+        aspect-ratio: 0.84;
       }
 
       .chip {
@@ -896,6 +971,7 @@
         }
 
         .hero-grid,
+        .feature-showcase,
         .trust-layout,
         .cta-content {
           grid-template-columns: 1fr;
@@ -922,6 +998,10 @@
 
         .steps {
           gap: 1px;
+        }
+
+        .ar-collage {
+          min-height: 680px;
         }
 
         h1 {
@@ -974,6 +1054,36 @@
 
         .metric-grid {
           gap: 8px;
+        }
+
+        .ar-collage {
+          display: flex;
+          align-items: flex-start;
+          min-height: auto;
+          margin-right: -16px;
+          padding-right: 16px;
+          gap: 12px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: thin;
+        }
+
+        .ar-image-card,
+        .ar-image-card.hmd,
+        .ar-image-card.selfie,
+        .ar-image-card.podium {
+          position: relative;
+          inset: auto;
+          z-index: auto;
+          flex: 0 0 min(78vw, 310px);
+          width: auto;
+          aspect-ratio: 0.78;
+          scroll-snap-align: start;
+        }
+
+        .ar-image-card.hmd {
+          flex-basis: min(86vw, 350px);
+          aspect-ratio: 1.35;
         }
 
         .route-map {
@@ -1274,158 +1384,180 @@
             <span class="section-kicker">Recursos</span>
             <h2 id="features-title">Competição digital, para esforço real.</h2>
           </div>
-          <div class="feature-grid">
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 12h16M8 6h8M8 18h8"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                </svg>
-                <span class="chip">Imersão</span>
-              </div>
-              <h3>Narração por IA</h3>
-              <p>
-                Uma camada de narração generativa para destacar splits, PRs e
-                chegadas disputadas com base em dados reais.
-              </p>
-            </article>
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M5 6h14v10H8l-3 3V6Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span class="chip">Chat e reações</span>
-              </div>
-              <h3>Sala ao vivo</h3>
-              <p>
-                Ranking, status, comentários e sinais de torcida ficam junto do
-                contexto da prova.
-              </p>
-            </article>
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M4 7c3 0 3 10 6 10s3-10 6-10 3 10 4 10"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                </svg>
-                <span class="chip">Wearables</span>
-              </div>
-              <h3>Sensores conectados</h3>
-              <p>
-                Integre relógios, GPS, frequência cardíaca e apps de corrida que
-                o atleta já usa.
-              </p>
-            </article>
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M12 3l7 4v5c0 4.5-2.8 7.4-7 9-4.2-1.6-7-4.5-7-9V7l7-4Z"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                  />
-                  <path
-                    d="m8.5 12 2.2 2.2 4.8-5"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span class="chip">Anti-fraude</span>
-              </div>
-              <h3>Validação de dados</h3>
-              <p>
-                Análise de percurso, ritmo, sensores e anomalias protege a
-                confiança do ranking.
-              </p>
-            </article>
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M7 18v-6m5 6V6m5 12v-9"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M4 20h16"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                  />
-                </svg>
-                <span class="chip">Matching IA</span>
-              </div>
-              <h3>Oponentes no nível certo</h3>
-              <p>
-                Encontre disputas justas com corredores de ritmo, histórico e
-                objetivo semelhantes.
-              </p>
-            </article>
-            <article class="feature">
-              <div class="feature-top">
-                <svg
-                  class="feature-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M8 20h8M8 16h8M6 10h12v6H6zM9 10V7a3 3 0 0 1 6 0v3"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span class="chip">Pódio AR</span>
-              </div>
-              <h3>Celebração aumentada</h3>
-              <p>
-                Vencedores, avatares, medalhas e tempos validados viram uma cena
-                compartilhável.
-              </p>
-            </article>
+          <div class="feature-showcase">
+            <div class="feature-grid">
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M4 12h16M8 6h8M8 18h8"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span class="chip">Imersão</span>
+                </div>
+                <h3>Narração por IA</h3>
+                <p>
+                  Uma camada de narração generativa para destacar splits, PRs e
+                  chegadas disputadas com base em dados reais.
+                </p>
+              </article>
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M5 6h14v10H8l-3 3V6Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="chip">Chat e reações</span>
+                </div>
+                <h3>Sala ao vivo</h3>
+                <p>
+                  Ranking, status, comentários e sinais de torcida ficam junto
+                  do contexto da prova.
+                </p>
+              </article>
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M4 7c3 0 3 10 6 10s3-10 6-10 3 10 4 10"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span class="chip">Wearables</span>
+                </div>
+                <h3>Sensores conectados</h3>
+                <p>
+                  Integre relógios, GPS, frequência cardíaca e apps de corrida
+                  que o atleta já usa.
+                </p>
+              </article>
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 3l7 4v5c0 4.5-2.8 7.4-7 9-4.2-1.6-7-4.5-7-9V7l7-4Z"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    />
+                    <path
+                      d="m8.5 12 2.2 2.2 4.8-5"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="chip">Anti-fraude</span>
+                </div>
+                <h3>Validação de dados</h3>
+                <p>
+                  Análise de percurso, ritmo, sensores e anomalias protege a
+                  confiança do ranking.
+                </p>
+              </article>
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M7 18v-6m5 6V6m5 12v-9"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                    <path
+                      d="M4 20h16"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span class="chip">Matching IA</span>
+                </div>
+                <h3>Oponentes no nível certo</h3>
+                <p>
+                  Encontre disputas justas com corredores de ritmo, histórico e
+                  objetivo semelhantes.
+                </p>
+              </article>
+              <article class="feature">
+                <div class="feature-top">
+                  <svg
+                    class="feature-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M8 20h8M8 16h8M6 10h12v6H6zM9 10V7a3 3 0 0 1 6 0v3"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span class="chip">Pódio AR</span>
+                </div>
+                <h3>Celebração aumentada</h3>
+                <p>
+                  Vencedores, avatares, medalhas e tempos validados viram uma
+                  cena compartilhável.
+                </p>
+              </article>
+            </div>
+            <div class="ar-collage" aria-label="Prévia de experiências em realidade aumentada">
+              <figure class="ar-image-card hmd">
+                <img
+                  src="assets/pacearena-ra-hmd.jpg"
+                  alt="Corredores em avenida com interface de corrida em realidade aumentada"
+                />
+              </figure>
+              <figure class="ar-image-card selfie">
+                <img
+                  src="assets/pacearena-ra-selfie.jpg"
+                  alt="Corredor tirando selfie com medalha e elementos digitais da PaceArena"
+                />
+              </figure>
+              <figure class="ar-image-card podium">
+                <img
+                  src="assets/pacearena-ra-podium.jpg"
+                  alt="Pódio de realidade aumentada com corredores e ranking digital"
+                />
+              </figure>
+            </div>
           </div>
         </div>
       </section>
