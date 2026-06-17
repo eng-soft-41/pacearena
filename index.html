@@ -332,30 +332,19 @@
 
       .race-room {
         position: relative;
-        border: 1px solid var(--border-strong);
-        border-radius: 12px;
-        background: var(--surface);
-        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
-        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        overflow: visible;
       }
 
       .race-room::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background:
-          linear-gradient(
-            120deg,
-            transparent 0 44%,
-            rgba(229, 254, 82, 0.12) 45%,
-            transparent 50%
-          ),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.04) 0 1px,
-            transparent 1px 32px
-          );
+        content: none;
+      }
+
+      .race-room-image {
+        width: min(100%, 560px);
+        height: auto;
+        filter: drop-shadow(0 30px 70px rgba(0, 0, 0, 0.55));
       }
 
       .phone-bar,
@@ -1226,68 +1215,13 @@
             class="race-room"
             aria-label="Prévia de sala de corrida ao vivo"
           >
-            <div class="phone-bar">
-              <div>
-                <p class="phone-title">10K Cidade</p>
-                <span class="chip">12 corredores</span>
-              </div>
-              <span class="status"
-                ><span class="live-dot" aria-hidden="true"></span>Ao vivo</span
-              >
-            </div>
-            <div class="race-content">
-              <div class="metric-grid">
-                <div class="metric">
-                  <div class="metric-label">Tempo</div>
-                  <div class="metric-value primary">23:45</div>
-                </div>
-                <div class="metric">
-                  <div class="metric-label">Pace</div>
-                  <div class="metric-value">4:32</div>
-                </div>
-                <div class="metric">
-                  <div class="metric-label">FC</div>
-                  <div class="metric-value">162</div>
-                </div>
-              </div>
-              <div class="route-map" aria-label="Mapa de progresso GPS">
-                <svg
-                  viewBox="0 0 520 300"
-                  role="img"
-                  aria-label="Rota com corredores e checkpoints"
-                >
-                  <path
-                    class="route-path"
-                    d="M45 235 C92 174 123 202 160 148 S250 88 292 126 S345 228 405 172 S472 98 498 58"
-                    opacity="0.58"
-                  />
-                  <path
-                    class="runner-path"
-                    d="M45 235 C92 174 123 202 160 148 S250 88 292 126 S345 228 405 172"
-                  />
-                  <circle class="checkpoint" cx="160" cy="148" r="8" />
-                  <circle class="opponent-pin" cx="292" cy="126" r="9" />
-                  <circle class="runner-pin" cx="405" cy="172" r="11" />
-                </svg>
-              </div>
-              <div class="leaderboard" aria-label="Ranking ao vivo">
-                <div class="leader-row">
-                  <span class="rank">01</span>
-                  <span>Aline R.</span>
-                  <span class="time">40:12</span>
-                </div>
-                <div class="leader-row current">
-                  <span class="rank">02</span>
-                  <span>Você</span>
-                  <span class="time">40:35</span>
-                </div>
-                <div class="leader-row">
-                  <span class="rank">03</span>
-                  <span>Jordan T.</span>
-                  <span class="time">40:52</span>
-                </div>
-              </div>
-            </div>
+            <img
+              class="race-room-image"
+              src="assets/pacearena-hero-ui.png"
+              width="1275"
+              height="1760"
+              alt="Interface mobile do PaceArena mostrando sala de corrida ao vivo com métricas, mapa GPS, ranking, reações e narração por IA."
+            />
           </aside>
         </div>
       </section>
