@@ -861,7 +861,7 @@
 
       .validation-row {
         display: grid;
-        grid-template-columns: 168px 1fr auto;
+        grid-template-columns: minmax(168px, 1fr) auto auto;
         gap: 16px;
         align-items: center;
         border: 1px solid var(--border);
@@ -875,18 +875,62 @@
         font-weight: 700;
       }
 
-      .bar {
-        height: 8px;
-        border-radius: 999px;
-        background: var(--surface-subtle);
-        overflow: hidden;
+      .validation-switch {
+        position: relative;
+        display: inline-flex;
+        width: 52px;
+        height: 30px;
+        cursor: pointer;
       }
 
-      .bar span {
-        display: block;
+      .validation-switch input {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .validation-switch-track {
+        position: relative;
+        width: 100%;
         height: 100%;
-        border-radius: inherit;
+        border: 1px solid var(--border-strong);
+        border-radius: 999px;
+        background: var(--surface-subtle);
+        transition:
+          background 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .validation-switch-track::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--text-secondary);
+        box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+        transition:
+          background 180ms ease,
+          transform 180ms ease;
+      }
+
+      .validation-switch input:checked + .validation-switch-track {
+        border-color: var(--primary);
         background: var(--primary);
+      }
+
+      .validation-switch input:checked + .validation-switch-track::before {
+        background: var(--text-inverse);
+        transform: translateX(22px);
+      }
+
+      .validation-switch input:focus-visible + .validation-switch-track {
+        outline: 2px solid var(--primary-hover);
+        outline-offset: 3px;
       }
 
       .validation-status {
@@ -894,6 +938,10 @@
         font-family: "JetBrains Mono", monospace;
         font-size: 12px;
         font-weight: 700;
+      }
+
+      .validation-row.is-off .validation-status {
+        color: var(--text-muted);
       }
 
       .final-cta {
@@ -1167,7 +1215,7 @@
           <a href="#recursos">Recursos</a>
           <a href="#confianca">Confiança</a>
         </div>
-        <a class="button button-primary" href="#cta">Entrar na corrida</a>
+        <a class="button button-primary" href="#cta">Entrar no PaceArena</a>
       </nav>
     </header>
 
@@ -1654,28 +1702,57 @@
             </div>
             <div class="trust-card">
               <div class="panel-header">
-                <h3>Check de prova</h3>
-                <span class="chip">Resultado verificável</span>
+                <h3>Configurações</h3>
               </div>
               <div class="validation-stack">
                 <div class="validation-row">
                   <span class="validation-name">GPS contínuo</span>
-                  <div class="bar"><span style="width: 100%"></span></div>
-                  <span class="validation-status">OK</span>
+                  <label class="validation-switch">
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-label="Compartilhar GPS contínuo"
+                      checked
+                    />
+                    <span class="validation-switch-track"></span>
+                  </label>
+                  <span class="validation-status">Público</span>
                 </div>
                 <div class="validation-row">
                   <span class="validation-name">Ritmo</span>
-                  <div class="bar"><span style="width: 100%"></span></div>
-                  <span class="validation-status">OK</span>
+                  <label class="validation-switch">
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-label="Compartilhar ritmo"
+                      checked
+                    />
+                    <span class="validation-switch-track"></span>
+                  </label>
+                  <span class="validation-status">Público</span>
                 </div>
-                <div class="validation-row">
+                <div class="validation-row is-off">
                   <span class="validation-name">Sensor de batimento</span>
-                  <div class="bar"><span style="width: 1%"></span></div>
+                  <label class="validation-switch">
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-label="Compartilhar sensor de batimento"
+                    />
+                    <span class="validation-switch-track"></span>
+                  </label>
                   <span class="validation-status">Privado</span>
                 </div>
-                <div class="validation-row">
+                <div class="validation-row is-off">
                   <span class="validation-name">Visibilidade da rota</span>
-                  <div class="bar"><span style="width: 80%"></span></div>
+                  <label class="validation-switch">
+                    <input
+                      type="checkbox"
+                      role="switch"
+                      aria-label="Compartilhar visibilidade da rota"
+                    />
+                    <span class="validation-switch-track"></span>
+                  </label>
                   <span class="validation-status">Privado</span>
                 </div>
               </div>
@@ -1717,5 +1794,23 @@
         <span>Real runs. Real competition.</span>
       </div>
     </footer>
+    <script>
+      document.querySelectorAll(".validation-row").forEach((row) => {
+        const switchInput = row.querySelector(".validation-switch input");
+        const status = row.querySelector(".validation-status");
+
+        if (!switchInput || !status) return;
+
+        const syncStatus = () => {
+          const isPublic = switchInput.checked;
+
+          status.textContent = isPublic ? "Público" : "Privado";
+          row.classList.toggle("is-off", !isPublic);
+        };
+
+        switchInput.addEventListener("change", syncStatus);
+        syncStatus();
+      });
+    </script>
   </body>
 </html>
